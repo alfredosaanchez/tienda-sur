@@ -1,4 +1,4 @@
-# SUR — Tienda de ropa (catálogo + panel admin)
+# ALSE — Tienda de ropa (catálogo + panel admin)
 
 Proyecto listo para usar: página principal con catálogo deslizable (swipe) y
 panel administrativo privado para agregar/editar/eliminar categorías y productos.
@@ -77,7 +77,7 @@ datos + login + almacenamiento de imágenes, gratis) + Vercel (hosting, gratis).
    ```
    git init
    git add .
-   git commit -m "Primer commit: tienda SUR"
+   git commit -m "Primer commit: tienda ALSE"
    ```
 2. Crea un repositorio nuevo (vacío, sin README) en https://github.com/new
 3. GitHub te va a mostrar unos comandos parecidos a estos — cópialos y pégalos en tu terminal:
@@ -122,7 +122,7 @@ datos + login + almacenamiento de imágenes, gratis) + Vercel (hosting, gratis).
 
 ## 6. Personalizar el diseño
 
-- **Nombre de marca:** aparece como "SUR" en `components/Navbar.tsx`,
+- **Nombre de marca:** aparece como "ALSE" en `components/Navbar.tsx`,
   `app/admin/login/page.tsx` y `app/layout.tsx`. Búscalo y reemplázalo.
 - **Colores:** editables en `tailwind.config.js`, dentro de `theme.extend.colors`.
 - **Texto del Hero (portada):** editable en `components/Hero.tsx`.

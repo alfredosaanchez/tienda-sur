@@ -40,7 +40,7 @@ export default function LoginPage() {
         onSubmit={handleSubmit}
         className="w-full max-w-sm bg-surface rounded-xl2 shadow-neu p-8"
       >
-        <p className="font-display italic text-2xl mb-1">SUR</p>
+        <p className="font-display italic text-2xl mb-1">ALSE</p>
         <h1 className="text-lg mb-6 text-ink-soft">Panel administrativo</h1>
 
         <label className="block text-sm mb-1.5 text-ink-soft">Correo</label>

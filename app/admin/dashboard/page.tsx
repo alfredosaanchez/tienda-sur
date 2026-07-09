@@ -31,7 +31,7 @@ export default async function DashboardPage() {
       <div className="max-w-6xl mx-auto">
         <div className="flex items-center justify-between mb-8">
           <div>
-            <p className="font-display italic text-2xl">SUR</p>
+            <p className="font-display italic text-2xl">ALSE</p>
             <p className="text-sm text-ink-soft">Panel administrativo</p>
           </div>
           <LogoutButton />

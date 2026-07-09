@@ -16,7 +16,7 @@ const manrope = Manrope({
 });
 
 export const metadata: Metadata = {
-  title: "SUR — Ropa que se siente bien",
+  title: "ALSE — Wear the essence",
   description: "Camisas, monos, pantalones y shorts con un diseño premium y minimalista.",
 };
 

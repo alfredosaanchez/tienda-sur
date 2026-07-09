@@ -73,7 +73,7 @@ export default async function HomePage() {
       </section>
 
       <footer className="max-w-6xl mx-auto px-6 py-10 text-sm text-ink-soft flex items-center justify-between">
-        <span>© {new Date().getFullYear()} SUR</span>
+        <span>© {new Date().getFullYear()} ALSE</span>
         <a href="/admin/login" className="hover:text-ink transition-colors">
           Panel admin
         </a>

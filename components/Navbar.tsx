@@ -2,7 +2,7 @@ export default function Navbar() {
   return (
     <header className="sticky top-0 z-30 bg-bg/80 backdrop-blur-md">
       <nav className="max-w-6xl mx-auto flex items-center justify-between px-6 py-5">
-        <span className="font-display italic text-2xl tracking-tight">SUR</span>
+        <span className="font-display italic text-2xl tracking-tight">ALSE</span>
 
         <ul className="hidden md:flex items-center gap-8 text-sm text-ink-soft">
           <li><a href="#catalogo" className="hover:text-ink transition-colors">Catálogo</a></li>
