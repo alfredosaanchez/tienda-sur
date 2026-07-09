@@ -1,8 +1,9 @@
 import { createClient } from "@/lib/supabaseServer";
 import CategoryManager from "@/components/admin/CategoryManager";
 import ProductManager from "@/components/admin/ProductManager";
+import SiteContentManager from "@/components/admin/SiteContentManager";
 import LogoutButton from "@/components/admin/LogoutButton";
-import type { Category, Product } from "@/types";
+import type { Category, Product, SiteContent } from "@/types";
 
 export const revalidate = 0;
 
@@ -19,6 +20,12 @@ export default async function DashboardPage() {
     .select("*, categories(*)")
     .order("created_at", { ascending: false });
 
+  const { data: siteContent } = await supabase
+    .from("site_content")
+    .select("*")
+    .eq("id", 1)
+    .maybeSingle();
+
   return (
     <main className="min-h-screen bg-bg px-6 py-10">
       <div className="max-w-6xl mx-auto">
@@ -29,6 +36,8 @@ export default async function DashboardPage() {
           </div>
           <LogoutButton />
         </div>
+
+        <SiteContentManager initialContent={siteContent as SiteContent | null} />
 
         <div className="mb-6">
           <CategoryManager initialCategories={(categories as Category[]) ?? []} />

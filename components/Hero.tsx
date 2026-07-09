@@ -1,4 +1,9 @@
-export default function Hero() {
+import Image from "next/image";
+import type { SiteContent } from "@/types";
+
+export default function Hero({ siteContent }: { siteContent: SiteContent | null }) {
+  const imageUrl = siteContent?.hero_image_url;
+
   return (
     <section className="max-w-6xl mx-auto px-6 pt-10 pb-20 grid md:grid-cols-2 gap-10 items-center">
       <div>
@@ -24,10 +29,23 @@ export default function Hero() {
       </div>
 
       <div className="relative aspect-square rounded-xl2 bg-surface shadow-neu flex items-center justify-center overflow-hidden">
-        <div className="absolute w-64 h-64 rounded-full bg-accent/10 blur-3xl" />
-        <span className="font-display italic text-2xl text-ink-soft relative z-10">
-          tu foto de campaña aquí
-        </span>
+        {imageUrl ? (
+          <Image
+            src={imageUrl}
+            alt="Foto de campaña"
+            fill
+            sizes="(max-width: 768px) 100vw, 500px"
+            className="object-cover"
+            priority
+          />
+        ) : (
+          <>
+            <div className="absolute w-64 h-64 rounded-full bg-accent/10 blur-3xl" />
+            <span className="font-display italic text-2xl text-ink-soft relative z-10 text-center px-6">
+              tu foto de campaña aquí
+            </span>
+          </>
+        )}
       </div>
     </section>
   );

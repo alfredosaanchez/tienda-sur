@@ -132,6 +132,27 @@ datos + login + almacenamiento de imágenes, gratis) + Vercel (hosting, gratis).
 
 ---
 
+## Actualización: foto de portada, botón Comprar, Nosotros y Contacto
+
+Si ya tenías el proyecto funcionando y acabas de actualizar los archivos, hazlo en este orden:
+
+1. Ve a Supabase → **SQL Editor** → pega y ejecuta el contenido de
+   `supabase/update_site_content.sql` (crea la tabla `site_content`).
+2. Copia tu archivo `.env.local` a la carpeta nueva del proyecto (no viene incluido
+   por seguridad).
+3. Corre `npm install` de nuevo (por si acaso) y luego `npm run dev` para probar.
+4. Entra al panel admin: ahora vas a ver un bloque nuevo llamado **"Contenido del
+   sitio"** arriba de Categorías, donde puedes:
+   - Subir la foto principal de la portada (reemplaza el texto "tu foto de
+     campaña aquí").
+   - Editar el título y el texto de la sección **Nosotros**.
+   - Editar el correo, teléfono/WhatsApp y dirección de **Contacto**.
+5. El botón **"Comprar"** de cada producto abre WhatsApp con un mensaje
+   pre-armado, usando el teléfono que configures en "Contenido del sitio". Si no
+   pones teléfono pero sí correo, abre un correo en su lugar.
+
+---
+
 ## Estructura de carpetas
 
 ```

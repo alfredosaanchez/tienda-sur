@@ -5,6 +5,16 @@ export type Category = {
   created_at?: string;
 };
 
+export type SiteContent = {
+  id: number;
+  hero_image_url: string | null;
+  about_title: string | null;
+  about_text: string | null;
+  contact_email: string | null;
+  contact_phone: string | null;
+  contact_address: string | null;
+};
+
 export type Product = {
   id: string;
   name: string;

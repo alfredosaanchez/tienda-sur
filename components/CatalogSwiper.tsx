@@ -7,9 +7,13 @@ import type { Category, Product } from "@/types";
 export default function CatalogSwiper({
   categories,
   products,
+  contactPhone,
+  contactEmail,
 }: {
   categories: Category[];
   products: Product[];
+  contactPhone?: string | null;
+  contactEmail?: string | null;
 }) {
   const [activeCategory, setActiveCategory] = useState<string | "all">("all");
   const scrollerRef = useRef<HTMLDivElement>(null);
@@ -99,7 +103,12 @@ export default function CatalogSwiper({
             </p>
           )}
           {filtered.map((product) => (
-            <ProductCard key={product.id} product={product} />
+            <ProductCard
+              key={product.id}
+              product={product}
+              contactPhone={contactPhone}
+              contactEmail={contactEmail}
+            />
           ))}
         </div>
       </div>
