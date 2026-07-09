@@ -1,0 +1,37 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: #ECEDF0;
+}
+
+/* Oculta la barra de scroll pero mantiene el scroll funcional (para el swipe en PC) */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Scroll horizontal con "snap" -> cada tarjeta encaja al soltar el swipe */
+.snap-x-mandatory {
+  scroll-snap-type: x mandatory;
+}
+.snap-card {
+  scroll-snap-align: start;
+}
+
+/* Estilos del carrusel del hero (Swiper) */
+.hero-swiper .swiper-pagination-bullet {
+  background: #9C7A4B;
+  opacity: 0.4;
+}
+.hero-swiper .swiper-pagination-bullet-active {
+  opacity: 1;
+}

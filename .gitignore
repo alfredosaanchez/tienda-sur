@@ -1,0 +1,18 @@
+# dependencias
+/node_modules
+
+# next.js
+/.next/
+/out/
+
+# producción
+/build
+
+# variables de entorno (NUNCA subir esto a GitHub)
+.env.local
+.env
+
+# varios
+.DS_Store
+*.pem
+npm-debug.log*
