@@ -153,6 +153,34 @@ Si ya tenías el proyecto funcionando y acabas de actualizar los archivos, hazlo
 
 ---
 
+## Actualización: carrito de compras
+
+Ya no hace falta ejecutar nada nuevo en Supabase — el carrito se guarda en el
+propio navegador del cliente (no en la base de datos). Solo necesitas
+reemplazar archivos de código:
+
+1. Copia tu `.env.local` a la carpeta nueva del proyecto (no viene en el ZIP).
+2. Reemplaza/agrega estos archivos:
+   - `contexts/CartContext.tsx` (nuevo)
+   - `components/CartWidget.tsx` (nuevo)
+   - `components/ProductCard.tsx`
+   - `components/CatalogSwiper.tsx`
+   - `app/layout.tsx`
+   - `app/page.tsx`
+3. `npm install`, `npm run dev` para probar, y luego `git add . / git commit / git push` para publicar.
+
+Cómo funciona:
+- Cada producto ahora tiene un botón **"Agregar al carrito"** en vez de comprar directo.
+- Un botón flotante 🛍️ abajo a la derecha muestra cuántos productos hay en el carrito.
+- Al abrirlo, el cliente puede ajustar cantidades o quitar productos.
+- El botón **"Finalizar pedido"** arma un solo mensaje de WhatsApp (o correo, si no
+  configuraste teléfono) con todo el pedido y el total — usando el mismo
+  teléfono/correo que configuras en "Contenido del sitio" en el panel admin.
+- El carrito se guarda en el navegador de cada cliente (no se pierde si recarga
+  la página, pero es distinto en cada dispositivo/navegador).
+
+---
+
 ## Estructura de carpetas
 
 ```

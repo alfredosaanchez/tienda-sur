@@ -1,35 +1,29 @@
+"use client";
+
+import { useState } from "react";
 import Image from "next/image";
+import { useCart } from "@/contexts/CartContext";
 import type { Product } from "@/types";
 
-function buildWhatsAppLink(phone: string, productName: string, price: number) {
-  const digitsOnly = phone.replace(/[^0-9]/g, "");
-  const message = `Hola! Me interesa comprar: ${productName} ($${price.toFixed(
-    2
-  )}). ¿Está disponible?`;
-  return `https://wa.me/${digitsOnly}?text=${encodeURIComponent(message)}`;
-}
+export default function ProductCard({ product }: { product: Product }) {
+  const { addItem } = useCart();
+  const [added, setAdded] = useState(false);
 
-export default function ProductCard({
-  product,
-  contactPhone,
-  contactEmail,
-}: {
-  product: Product;
-  contactPhone?: string | null;
-  contactEmail?: string | null;
-}) {
   const hasDiscount = (product.discount_percent ?? 0) > 0;
   const finalPrice = hasDiscount
     ? product.price * (1 - (product.discount_percent ?? 0) / 100)
     : product.price;
 
-  const buyLink = contactPhone
-    ? buildWhatsAppLink(contactPhone, product.name, finalPrice)
-    : contactEmail
-    ? `mailto:${contactEmail}?subject=${encodeURIComponent(
-        `Quiero comprar: ${product.name}`
-      )}`
-    : null;
+  const handleAdd = () => {
+    addItem({
+      id: product.id,
+      name: product.name,
+      price: finalPrice,
+      image_url: product.image_url,
+    });
+    setAdded(true);
+    setTimeout(() => setAdded(false), 1500);
+  };
 
   return (
     <div className="snap-card shrink-0 w-64 md:w-72 bg-surface rounded-xl2 shadow-neu p-4 flex flex-col">
@@ -70,24 +64,14 @@ export default function ProductCard({
           )}
         </div>
 
-        {buyLink ? (
-          <a
-            href={buyLink}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="mt-4 text-center py-2.5 rounded-full bg-ink text-bg text-sm shadow-neu-sm hover:opacity-90 transition-opacity"
-          >
-            Comprar
-          </a>
-        ) : (
-          <button
-            disabled
-            title="Configura un teléfono o correo de contacto en el panel admin"
-            className="mt-4 text-center py-2.5 rounded-full bg-bg text-ink-soft text-sm shadow-neu-inset cursor-not-allowed"
-          >
-            Comprar
-          </button>
-        )}
+        <button
+          onClick={handleAdd}
+          className={`mt-4 text-center py-2.5 rounded-full text-sm shadow-neu-sm transition-colors ${
+            added ? "bg-accent text-bg" : "bg-ink text-bg hover:opacity-90"
+          }`}
+        >
+          {added ? "Agregado ✓" : "Agregar al carrito"}
+        </button>
       </div>
     </div>
   );

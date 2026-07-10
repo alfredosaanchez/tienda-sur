@@ -1,6 +1,7 @@
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
 import CatalogSwiper from "@/components/CatalogSwiper";
+import CartWidget from "@/components/CartWidget";
 import { createClient } from "@/lib/supabaseServer";
 import type { Category, Product, SiteContent } from "@/types";
 
@@ -36,6 +37,9 @@ export default async function HomePage() {
       <CatalogSwiper
         categories={(categories as Category[]) ?? []}
         products={(products as Product[]) ?? []}
+      />
+
+      <CartWidget
         contactPhone={content?.contact_phone}
         contactEmail={content?.contact_email}
       />
