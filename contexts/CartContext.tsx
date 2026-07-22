@@ -14,6 +14,7 @@ export type CartItem = {
   name: string;
   price: number; // precio ya con descuento aplicado
   image_url: string | null;
+  stock: number | null; // null = sin control de inventario
   quantity: number;
 };
 
@@ -55,9 +56,16 @@ export function CartProvider({ children }: { children: ReactNode }) {
     setItems((prev) => {
       const existing = prev.find((i) => i.id === item.id);
       if (existing) {
+        const nextQuantity = existing.quantity + 1;
+        if (existing.stock !== null && nextQuantity > existing.stock) {
+          return prev; // ya está en el máximo disponible, no agrega más
+        }
         return prev.map((i) =>
-          i.id === item.id ? { ...i, quantity: i.quantity + 1 } : i
+          i.id === item.id ? { ...i, quantity: nextQuantity } : i
         );
+      }
+      if (item.stock !== null && item.stock <= 0) {
+        return prev; // producto agotado, no se agrega
       }
       return [...prev, { ...item, quantity: 1 }];
     });
@@ -73,7 +81,12 @@ export function CartProvider({ children }: { children: ReactNode }) {
       return;
     }
     setItems((prev) =>
-      prev.map((i) => (i.id === id ? { ...i, quantity } : i))
+      prev.map((i) => {
+        if (i.id !== id) return i;
+        const capped =
+          i.stock !== null ? Math.min(quantity, i.stock) : quantity;
+        return { ...i, quantity: capped };
+      })
     );
   };
 

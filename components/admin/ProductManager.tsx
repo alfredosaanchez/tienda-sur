@@ -12,6 +12,7 @@ const emptyForm = {
   price: "",
   discount_percent: "",
   category_id: "",
+  stock: "",
 };
 
 export default function ProductManager({
@@ -41,6 +42,7 @@ export default function ProductManager({
       price: String(product.price),
       discount_percent: String(product.discount_percent ?? 0),
       category_id: product.category_id ?? "",
+      stock: product.stock === null || product.stock === undefined ? "" : String(product.stock),
     });
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
@@ -87,6 +89,7 @@ export default function ProductManager({
           ? parseFloat(form.discount_percent)
           : 0,
         category_id: form.category_id || null,
+        stock: form.stock.trim() === "" ? null : parseInt(form.stock, 10),
         ...(imageUrl ? { image_url: imageUrl } : {}),
       };
 
@@ -203,6 +206,24 @@ export default function ProductManager({
         </select>
 
         <label className="block text-sm mb-1.5 text-ink-soft">
+          Stock disponible
+        </label>
+        <input
+          type="number"
+          step="1"
+          min="0"
+          value={form.stock}
+          onChange={(e) => setForm({ ...form, stock: e.target.value })}
+          className="w-full mb-1.5 px-4 py-2.5 rounded-xl bg-bg shadow-neu-inset outline-none focus:ring-2 focus:ring-accent text-sm"
+          placeholder="Ej: 12 (déjalo vacío para no controlar inventario)"
+        />
+        <p className="text-xs text-ink-soft mb-4">
+          Si lo dejas vacío, el producto siempre se puede comprar. Si pones un
+          número, se muestra "Agotado" cuando llegue a 0. Recuerda restarlo tú
+          mismo después de cada venta.
+        </p>
+
+        <label className="block text-sm mb-1.5 text-ink-soft">
           Imagen {form.id && "(dejar vacío para no cambiarla)"}
         </label>
         <input
@@ -260,9 +281,18 @@ export default function ProductManager({
                 )}
               </div>
               <p className="text-sm font-medium leading-tight">{product.name}</p>
-              <p className="text-xs text-ink-soft mb-2">
+              <p className="text-xs text-ink-soft mb-1">
                 {product.categories?.name ?? "Sin categoría"} · $
                 {Number(product.price).toFixed(2)}
+              </p>
+              <p className="text-xs mb-2">
+                {product.stock === null || product.stock === undefined ? (
+                  <span className="text-ink-soft">Sin control de stock</span>
+                ) : product.stock === 0 ? (
+                  <span className="text-red-600 font-medium">Agotado</span>
+                ) : (
+                  <span className="text-ink-soft">Stock: {product.stock}</span>
+                )}
               </p>
               <div className="mt-auto flex gap-2">
                 <button

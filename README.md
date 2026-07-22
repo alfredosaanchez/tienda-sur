@@ -181,6 +181,31 @@ Cómo funciona:
 
 ---
 
+## Actualización: sistema de inventario (stock)
+
+1. Ve a Supabase → **SQL Editor** → pega y ejecuta el contenido de
+   `supabase/update_inventory.sql` (agrega el campo `stock` a productos).
+2. Copia tu `.env.local` a la carpeta nueva del proyecto.
+3. Reemplaza/agrega estos archivos:
+   - `types/index.ts`
+   - `components/admin/ProductManager.tsx`
+   - `components/ProductCard.tsx`
+   - `components/CartWidget.tsx`
+   - `contexts/CartContext.tsx`
+4. `npm install`, `npm run dev` para probar, y luego `git add . / git commit / git push`.
+
+Cómo funciona:
+- En el panel admin, cada producto tiene un campo **"Stock disponible"**.
+- Si lo dejas vacío, el producto **no tiene control de inventario** (siempre se
+  puede comprar, como hasta ahora).
+- Si le pones un número, se muestra **"Agotado"** cuando llegue a 0, y el
+  carrito no deja agregar más unidades de las disponibles.
+- El stock **no se descuenta solo** al hacer un pedido (el pedido se cierra
+  por WhatsApp, no hay pagos automáticos todavía) — tienes que restarlo tú
+  mismo en el panel admin después de confirmar cada venta.
+
+---
+
 ## Estructura de carpetas
 
 ```

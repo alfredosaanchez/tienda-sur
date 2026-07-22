@@ -6,7 +6,7 @@ import { useCart } from "@/contexts/CartContext";
 import type { Product } from "@/types";
 
 export default function ProductCard({ product }: { product: Product }) {
-  const { addItem } = useCart();
+  const { addItem, items } = useCart();
   const [added, setAdded] = useState(false);
 
   const hasDiscount = (product.discount_percent ?? 0) > 0;
@@ -14,16 +14,27 @@ export default function ProductCard({ product }: { product: Product }) {
     ? product.price * (1 - (product.discount_percent ?? 0) / 100)
     : product.price;
 
+  const stock = product.stock ?? null;
+  const isOutOfStock = stock !== null && stock <= 0;
+  const quantityInCart = items.find((i) => i.id === product.id)?.quantity ?? 0;
+  const reachedMax = stock !== null && quantityInCart >= stock;
+
   const handleAdd = () => {
+    if (isOutOfStock || reachedMax) return;
     addItem({
       id: product.id,
       name: product.name,
       price: finalPrice,
       image_url: product.image_url,
+      stock,
     });
     setAdded(true);
     setTimeout(() => setAdded(false), 1500);
   };
+
+  let buttonLabel = added ? "Agregado ✓" : "Agregar al carrito";
+  if (isOutOfStock) buttonLabel = "Agotado";
+  else if (reachedMax) buttonLabel = "Máximo disponible";
 
   return (
     <div className="snap-card shrink-0 w-64 md:w-72 bg-surface rounded-xl2 shadow-neu p-4 flex flex-col">
@@ -34,16 +45,21 @@ export default function ProductCard({ product }: { product: Product }) {
             alt={product.name}
             fill
             sizes="288px"
-            className="object-cover"
+            className={`object-cover ${isOutOfStock ? "grayscale opacity-60" : ""}`}
           />
         ) : (
           <div className="w-full h-full flex items-center justify-center text-ink-soft text-sm">
             Sin imagen
           </div>
         )}
-        {hasDiscount && (
+        {hasDiscount && !isOutOfStock && (
           <span className="absolute top-3 left-3 bg-ink text-bg text-xs px-2.5 py-1 rounded-full">
             -{product.discount_percent}%
+          </span>
+        )}
+        {isOutOfStock && (
+          <span className="absolute top-3 left-3 bg-red-600 text-white text-xs px-2.5 py-1 rounded-full">
+            Agotado
           </span>
         )}
       </div>
@@ -64,13 +80,24 @@ export default function ProductCard({ product }: { product: Product }) {
           )}
         </div>
 
+        {!isOutOfStock && stock !== null && stock <= 5 && (
+          <p className="text-xs text-accent mt-1">
+            ¡Quedan {stock} disponible{stock === 1 ? "" : "s"}!
+          </p>
+        )}
+
         <button
           onClick={handleAdd}
+          disabled={isOutOfStock || reachedMax}
           className={`mt-4 text-center py-2.5 rounded-full text-sm shadow-neu-sm transition-colors ${
-            added ? "bg-accent text-bg" : "bg-ink text-bg hover:opacity-90"
+            isOutOfStock || reachedMax
+              ? "bg-bg text-ink-soft shadow-neu-inset cursor-not-allowed"
+              : added
+              ? "bg-accent text-bg"
+              : "bg-ink text-bg hover:opacity-90"
           }`}
         >
-          {added ? "Agregado ✓" : "Agregar al carrito"}
+          {buttonLabel}
         </button>
       </div>
     </div>

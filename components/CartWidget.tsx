@@ -138,7 +138,11 @@ export default function CartWidget({
                             onClick={() =>
                               updateQuantity(item.id, item.quantity + 1)
                             }
-                            className="w-6 h-6 rounded-full bg-bg shadow-neu-sm text-xs"
+                            disabled={
+                              item.stock !== null &&
+                              item.quantity >= item.stock
+                            }
+                            className="w-6 h-6 rounded-full bg-bg shadow-neu-sm text-xs disabled:opacity-40 disabled:cursor-not-allowed"
                           >
                             +
                           </button>

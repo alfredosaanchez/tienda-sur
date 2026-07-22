@@ -23,6 +23,7 @@ export type Product = {
   discount_percent: number | null;
   category_id: string | null;
   image_url: string | null;
+  stock: number | null;
   created_at?: string;
   categories?: Category | null;
 };
